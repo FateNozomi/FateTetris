@@ -2,9 +2,9 @@
 {
     public enum MovementCommand
     {
-        HardDrop,
         Up,
-        Down,
+        HardDrop,
+        SoftDrop,
         Left,
         Right,
         RotateLeft,

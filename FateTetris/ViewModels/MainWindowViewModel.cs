@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using FateTetris.Models;
+using FateTetris.Views;
 using Framework.MVVM;
 
 namespace FateTetris.ViewModels
@@ -16,11 +17,11 @@ namespace FateTetris.ViewModels
     public class MainWindowViewModel : PropertyChangedBase
     {
         private Tetris _tetris;
-        private List<KeyCommand> _keyCommands;
         private InputEngine _inputEngine;
 
         private uint _level;
         private uint _score;
+        private uint _lastHighScore;
 
         public MainWindowViewModel()
         {
@@ -28,15 +29,21 @@ namespace FateTetris.ViewModels
             WireCommands();
         }
 
+        public IWindowService WindowService { get; set; } = new WindowService();
+
         public ICollectionView TetrisGrid { get; set; }
 
         public uint Level { get => _level; set => SetProperty(ref _level, value); }
 
         public uint Score { get => _score; set => SetProperty(ref _score, value); }
 
+        public uint LastHighScore { get => _lastHighScore; set => SetProperty(ref _lastHighScore, value); }
+
         public RelayCommand StartCommand { get; private set; }
 
         public RelayCommand EndCommand { get; private set; }
+
+        public RelayCommand SettingsCommand { get; private set; }
 
         public RelayCommand PauseCommand { get; private set; }
 
@@ -51,16 +58,8 @@ namespace FateTetris.ViewModels
             _tetris.GameOver += Tetris_GameOver;
             _inputEngine = new InputEngine(_tetris);
 
-            _keyCommands = new List<KeyCommand>();
-            _keyCommands.Add(new KeyCommand(MovementCommand.HardDrop, Key.E));
-            _keyCommands.Add(new KeyCommand(MovementCommand.Up, Key.Space));
-            _keyCommands.Add(new KeyCommand(MovementCommand.Down, Key.D));
-            _keyCommands.Add(new KeyCommand(MovementCommand.Left, Key.S));
-            _keyCommands.Add(new KeyCommand(MovementCommand.Right, Key.F));
-            _keyCommands.Add(new KeyCommand(MovementCommand.RotateLeft, Key.W));
-            _keyCommands.Add(new KeyCommand(MovementCommand.RotateRight, Key.R));
-
             TetrisGrid = CollectionViewSource.GetDefaultView(_tetris.Engine.Grid);
+            LastHighScore = Properties.Settings.Default.HighScore;
         }
 
         private void WireCommands()
@@ -78,6 +77,19 @@ namespace FateTetris.ViewModels
                     _tetris.End();
                 },
                 param => _tetris.IsRunning);
+
+            SettingsCommand = new RelayCommand(
+                param =>
+                {
+                    var vm = new SettingsViewModel();
+                    vm.Init();
+                    var result = WindowService.ShowDialog<SettingsView>(vm);
+                    if (result == true)
+                    {
+                        _inputEngine.LoadKeyBindings();
+                    }
+                },
+                param => !_tetris.IsRunning);
 
             PauseCommand = new RelayCommand(
                 param =>
@@ -101,7 +113,7 @@ namespace FateTetris.ViewModels
                 {
                     if (param is Key key)
                     {
-                        var keyCommand = _keyCommands.FirstOrDefault(k => k.KeyBinding == key);
+                        var keyCommand = _inputEngine.KeyCommands.FirstOrDefault(k => k.KeyBinding == key);
                         if (keyCommand != null)
                         {
                             _inputEngine.KeyDown(keyCommand.Command);
@@ -129,7 +141,7 @@ namespace FateTetris.ViewModels
                 {
                     if (param is Key key)
                     {
-                        var keyCommand = _keyCommands.FirstOrDefault(k => k.KeyBinding == key);
+                        var keyCommand = _inputEngine.KeyCommands.FirstOrDefault(k => k.KeyBinding == key);
                         if (keyCommand != null)
                         {
                             _inputEngine.KeyUp(keyCommand.Command);
@@ -145,6 +157,13 @@ namespace FateTetris.ViewModels
             {
                 Level = tetris.ScoreSystem.Level;
                 Score = tetris.ScoreSystem.Score;
+
+                if (Score > LastHighScore)
+                {
+                    LastHighScore = Score;
+                    Properties.Settings.Default.HighScore = LastHighScore;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 

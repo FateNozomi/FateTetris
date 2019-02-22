@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace FateTetris.Models
@@ -32,7 +33,11 @@ namespace FateTetris.Models
             _moveRightTimer = new DispatcherTimer();
             _moveRightTimer.Interval = _initialFrameTime;
             _moveRightTimer.Tick += MoveRightTimer_Tick;
+
+            LoadKeyBindings();
         }
+
+        public List<KeyCommand> KeyCommands { get; set; }
 
         public void KeyDown(MovementCommand command)
         {
@@ -44,7 +49,7 @@ namespace FateTetris.Models
                 case MovementCommand.Up:
                     _tetris.MoveBlockUp();
                     break;
-                case MovementCommand.Down:
+                case MovementCommand.SoftDrop:
                     if (!_moveDownTimer.IsEnabled)
                     {
                         _tetris.MoveBlockDown();
@@ -87,7 +92,7 @@ namespace FateTetris.Models
                     break;
                 case MovementCommand.Up:
                     break;
-                case MovementCommand.Down:
+                case MovementCommand.SoftDrop:
                     _moveDownTimer.Stop();
                     _moveDownTimer.Interval = _initialFrameTime;
                     break;
@@ -113,6 +118,20 @@ namespace FateTetris.Models
             _moveDownTimer.Stop();
             _moveLeftTimer.Stop();
             _moveRightTimer.Stop();
+        }
+
+        public void LoadKeyBindings()
+        {
+            KeyCommands = new List<KeyCommand>();
+
+            KeyCommands.Add(new KeyCommand(MovementCommand.HardDrop, (Key)Properties.Settings.Default.HardDrop));
+
+            KeyCommands.Add(new KeyCommand(MovementCommand.Up, Key.V));
+            KeyCommands.Add(new KeyCommand(MovementCommand.SoftDrop, (Key)Properties.Settings.Default.SoftDrop));
+            KeyCommands.Add(new KeyCommand(MovementCommand.Left, (Key)Properties.Settings.Default.Left));
+            KeyCommands.Add(new KeyCommand(MovementCommand.Right, (Key)Properties.Settings.Default.Right));
+            KeyCommands.Add(new KeyCommand(MovementCommand.RotateLeft, (Key)Properties.Settings.Default.RotateLeft));
+            KeyCommands.Add(new KeyCommand(MovementCommand.RotateRight, (Key)Properties.Settings.Default.RotateRight));
         }
 
         private void MoveDownTimer_Tick(object sender, EventArgs e)

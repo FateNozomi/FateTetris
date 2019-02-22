@@ -38,7 +38,7 @@
                     <GroupBox.Header>
                         <TextBlock Text="LAST HIGH SCORE" Opacity="0.6"/>
                     </GroupBox.Header>
-                    <TextBlock Text="{Binding Score}" Opacity="0.5" FontSize="25" HorizontalAlignment="Right"/>
+                    <TextBlock Text="{Binding LastHighScore}" Opacity="0.5" FontSize="25" HorizontalAlignment="Right"/>
                 </GroupBox>
                 <Button Content="Start" Command="{Binding StartCommand}" Height="23" Margin="3"/>
                 <Button Content="End" Command="{Binding EndCommand}" Height="23" Margin="3"/>

@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FateTetris.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RotateLeft" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">66</Value>
+    </Setting>
+    <Setting Name="RotateRight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">61</Value>
+    </Setting>
+    <Setting Name="Left" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">62</Value>
+    </Setting>
+    <Setting Name="Right" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">49</Value>
+    </Setting>
+    <Setting Name="Up" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">65</Value>
+    </Setting>
+    <Setting Name="SoftDrop" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">47</Value>
+    </Setting>
+    <Setting Name="HardDrop" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">48</Value>
+    </Setting>
+    <Setting Name="HighScore" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
