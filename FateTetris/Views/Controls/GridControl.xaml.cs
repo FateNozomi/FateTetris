@@ -94,7 +94,6 @@ namespace FateTetris.Views.Controls
             GridTetris.Children.Clear();
             GridTetris.ColumnDefinitions.Clear();
             GridTetris.RowDefinitions.Clear();
-            GridTetris.Background = Brushes.Black;
             var grid = TetrisGrid.OfType<Models.Block>();
             int gridX = (int)grid.Max(b => b.Coordinate.X);
             int gridY = (int)grid.Max(b => b.Coordinate.Y);
