@@ -57,8 +57,23 @@ namespace FateTetris.Views.Controls
         private void DrawTetrisGrid()
         {
             GridTetris.Children.Clear();
+            GridTetris.ColumnDefinitions.Clear();
+            GridTetris.RowDefinitions.Clear();
             GridTetris.Background = Brushes.Black;
             var grid = TetrisGrid.OfType<Models.Block>();
+            int gridX = (int)grid.Max(b => b.Coordinate.X);
+            int gridY = (int)grid.Max(b => b.Coordinate.Y);
+
+            for (int x = 0; x <= gridX; x++)
+            {
+                GridTetris.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+
+            for (int y = 0; y <= gridY; y++)
+            {
+                GridTetris.RowDefinitions.Add(new RowDefinition());
+            }
+
             foreach (var block in grid)
             {
                 block.Rectangle.Stroke = Brushes.Gray;
