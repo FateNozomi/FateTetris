@@ -42,8 +42,11 @@ namespace FateTetris.Models
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             FontStyle = FontStyles.Normal;
-            Key = e.Key;
-            Text = e.Key.ToString();
+            if (e.Key != Key.Tab)
+            {
+                Key = e.Key;
+                Text = e.Key.ToString();
+            }
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
