@@ -12,6 +12,7 @@ namespace FateTetris.Models
     {
         private readonly TimeSpan _initialFrameTime = TimeSpan.FromMilliseconds(1000 / 8);
         private readonly TimeSpan _subsequentFrameTime = TimeSpan.FromMilliseconds(1000 / 60);
+        private readonly TimeSpan _moveDownSubsequentFrameTime = TimeSpan.FromMilliseconds(1000 / 30);
 
         private Tetris _tetris;
         private DispatcherTimer _moveDownTimer;
@@ -137,7 +138,7 @@ namespace FateTetris.Models
         private void MoveDownTimer_Tick(object sender, EventArgs e)
         {
             _tetris.MoveBlockDown();
-            _moveDownTimer.Interval = _subsequentFrameTime;
+            _moveDownTimer.Interval = _moveDownSubsequentFrameTime;
         }
 
         private void MoveLeftTimer_Tick(object sender, EventArgs e)
