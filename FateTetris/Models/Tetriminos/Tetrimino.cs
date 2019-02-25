@@ -26,6 +26,8 @@ namespace FateTetris.Models.Tetriminos
 
         public Brush Color { get; protected set; }
 
+        public bool IsLocked { get; set; }
+
         public void MoveUp()
         {
             Y -= 1;

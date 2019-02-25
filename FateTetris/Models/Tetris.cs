@@ -72,18 +72,21 @@ namespace FateTetris.Models
 
         public void MoveBlockDown()
         {
-            bool moved = MoveDown(CurrentTetrimino);
-            if (moved)
+            if (!CurrentTetrimino.IsLocked)
             {
-                LockDelay();
-            }
-            else
-            {
-                if (Timer.IsEnabled)
+                bool moved = MoveDown(CurrentTetrimino);
+                if (moved)
                 {
-                    Timer.Stop();
-                    Timer.Interval = default(TimeSpan);
-                    Timer.Start();
+                    LockDelay();
+                }
+                else
+                {
+                    if (Timer.IsEnabled)
+                    {
+                        Timer.Stop();
+                        Timer.Interval = default(TimeSpan);
+                        Timer.Start();
+                    }
                 }
             }
         }
@@ -158,6 +161,8 @@ namespace FateTetris.Models
                     b.IsLocked = true;
                 }
             }
+
+            tetrimino.IsLocked = true;
         }
 
         private void LockDelay()
@@ -185,7 +190,13 @@ namespace FateTetris.Models
             }
             else
             {
-                LockTetrimino(CurrentTetrimino);
+                if (!CurrentTetrimino.IsLocked)
+                {
+                    LockTetrimino(CurrentTetrimino);
+                    Timer.Interval = TimeSpan.FromMilliseconds(250);
+                    return;
+                }
+
                 ClearFullRows();
 
                 var blocks = CurrentTetrimino.GetShapeOnGrid();
