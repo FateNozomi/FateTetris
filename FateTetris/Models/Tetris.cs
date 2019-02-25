@@ -13,6 +13,7 @@ namespace FateTetris.Models
     {
         public Tetris()
         {
+            Engine = new TetrisEngine(10, 20);
             Timer = new DispatcherTimer();
             Timer.Tick += Timer_Tick;
         }
@@ -25,7 +26,7 @@ namespace FateTetris.Models
 
         public DispatcherTimer Timer { get; set; }
 
-        public TetrisEngine Engine { get; set; } = new TetrisEngine(10, 20);
+        public TetrisEngine Engine { get; set; }
 
         public ScoreSystem ScoreSystem { get; set; } = new ScoreSystem();
 
@@ -58,10 +59,7 @@ namespace FateTetris.Models
 
         public void HardDropBlock()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.HardDrop(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
-
+            Engine.Renderer.CommandRender(Engine.HardDrop, CurrentTetrimino);
             Timer.Stop();
             Timer.Interval = default(TimeSpan);
             Timer.Start();
@@ -69,9 +67,7 @@ namespace FateTetris.Models
 
         public void MoveBlockUp()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.MoveUp(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
+            Engine.Renderer.CommandRender(Engine.MoveUp, CurrentTetrimino);
         }
 
         public bool MoveBlockDown()
@@ -93,30 +89,22 @@ namespace FateTetris.Models
 
         public void MoveBlockLeft()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.MoveLeft(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
+            Engine.Renderer.CommandRender(Engine.MoveLeft, CurrentTetrimino);
         }
 
         public void MoveBlockRight()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.MoveRight(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
+            Engine.Renderer.CommandRender(Engine.MoveRight, CurrentTetrimino);
         }
 
         public void RotateBlockLeft()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.RotateLeft(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
+            Engine.Renderer.CommandRender(Engine.RotateLeft, CurrentTetrimino);
         }
 
         public void RotateBlockRight()
         {
-            ClearTetrimino(CurrentTetrimino);
-            Engine.RotateRight(CurrentTetrimino);
-            DrawTetrimino(CurrentTetrimino);
+            Engine.Renderer.CommandRender(Engine.RotateRight, CurrentTetrimino);
         }
 
         public void ClearFullRows()
@@ -154,86 +142,6 @@ namespace FateTetris.Models
                 {
                     blocks[i].Rectangle.Fill = blocksPrime[i].Rectangle.Fill;
                     blocks[i].IsLocked = blocksPrime[i].IsLocked;
-                }
-            }
-        }
-
-        private void DrawTetrimino(Tetrimino tetrimino)
-        {
-            DrawGhostTetrimino(tetrimino);
-
-            var blocks = tetrimino.GetShapeOnGrid();
-            foreach (var block in blocks)
-            {
-                var b = Engine.Grid.FirstOrDefault(r => r.Coordinate == new Point(block.X, block.Y));
-                if (b != null)
-                {
-                    b.Rectangle.Fill = tetrimino.Color;
-                }
-            }
-        }
-
-        private void DrawGhostTetrimino(Tetrimino tetrimino)
-        {
-            var clone = tetrimino.Clone();
-            while (true)
-            {
-                if (!Engine.MoveDown(clone))
-                {
-                    break;
-                }
-            }
-
-            var blocks = clone.GetShapeOnGrid();
-            foreach (var block in blocks)
-            {
-                var b = Engine.Grid.FirstOrDefault(r => r.Coordinate == new Point(block.X, block.Y));
-                if (b != null)
-                {
-                    b.Rectangle.Fill = tetrimino.Color;
-                    if (b.Rectangle.Fill.IsFrozen)
-                    {
-                        b.Rectangle.Fill = b.Rectangle.Fill.Clone();
-                    }
-
-                    b.Rectangle.Fill.Opacity = 0.35;
-                }
-            }
-        }
-
-        private void ClearTetrimino(Tetrimino tetrimino)
-        {
-            ClearGhostTetrimino(tetrimino);
-            var blocks = tetrimino.GetShapeOnGrid();
-            foreach (var block in blocks)
-            {
-                var b = Engine.Grid.FirstOrDefault(r => r.Coordinate == new Point(block.X, block.Y));
-                if (b != null)
-                {
-                    b.Rectangle.Fill = null;
-                    b.IsLocked = false;
-                }
-            }
-        }
-
-        private void ClearGhostTetrimino(Tetrimino tetrimino)
-        {
-            var clone = tetrimino.Clone();
-            while (true)
-            {
-                if (!Engine.MoveDown(clone))
-                {
-                    break;
-                }
-            }
-
-            var blocks = clone.GetShapeOnGrid();
-            foreach (var block in blocks)
-            {
-                var b = Engine.Grid.FirstOrDefault(r => r.Coordinate == new Point(block.X, block.Y));
-                if (b != null)
-                {
-                    b.Rectangle.Fill = null;
                 }
             }
         }
@@ -293,10 +201,7 @@ namespace FateTetris.Models
 
         private bool MoveDown(Tetrimino tetrimino)
         {
-            ClearTetrimino(tetrimino);
-            bool moved = Engine.MoveDown(tetrimino);
-            DrawTetrimino(tetrimino);
-            return moved;
+            return Engine.Renderer.CommandRender(Engine.MoveDown, tetrimino);
         }
     }
 }

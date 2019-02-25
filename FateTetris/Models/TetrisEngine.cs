@@ -24,7 +24,11 @@ namespace FateTetris.Models
                     Grid.Add(new Block(new Point(x, y)));
                 }
             }
+
+            Renderer = new TetrisRenderer(this);
         }
+
+        public TetrisRenderer Renderer { get; }
 
         public int X { get; }
 
