@@ -70,20 +70,21 @@ namespace FateTetris.Models
             Engine.Renderer.CommandRender(Engine.MoveUp, CurrentTetrimino);
         }
 
-        public bool MoveBlockDown()
+        public void MoveBlockDown()
         {
             bool moved = MoveDown(CurrentTetrimino);
             if (moved)
             {
                 LockDelay();
-                return true;
             }
             else
             {
-                Timer.Stop();
-                Timer.Interval = default(TimeSpan);
-                Timer.Start();
-                return false;
+                if (Timer.IsEnabled)
+                {
+                    Timer.Stop();
+                    Timer.Interval = default(TimeSpan);
+                    Timer.Start();
+                }
             }
         }
 
@@ -164,9 +165,12 @@ namespace FateTetris.Models
             var clone = CurrentTetrimino.Clone();
             if (!Engine.MoveDown(clone))
             {
-                Timer.Stop();
-                Timer.Interval = TimeSpan.FromMilliseconds(500);
-                Timer.Start();
+                if (Timer.IsEnabled)
+                {
+                    Timer.Stop();
+                    Timer.Interval = TimeSpan.FromMilliseconds(500);
+                    Timer.Start();
+                }
             }
         }
 
