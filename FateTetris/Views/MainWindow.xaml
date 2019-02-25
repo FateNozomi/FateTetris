@@ -45,6 +45,15 @@
                 <Button Content="Settings" Command="{Binding SettingsCommand}" Height="23" Margin="3"/>
             </StackPanel>
         </Grid>
-        <r:GridControl Grid.Column="1" TetrisGrid="{Binding TetrisGrid}" Margin="3"/>
+        <r:GridControl x:Name="gridControl" Grid.Column="1" TetrisGrid="{Binding TetrisGrid}" Background="#212121" Margin="3"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Preview" Margin="3">
+                <r:GridControl TetrisGrid="{Binding PreviewGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>

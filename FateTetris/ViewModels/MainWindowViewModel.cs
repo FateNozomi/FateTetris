@@ -33,6 +33,8 @@ namespace FateTetris.ViewModels
 
         public ICollectionView TetrisGrid { get; set; }
 
+        public ICollectionView PreviewGrid { get; set; }
+
         public uint Level { get => _level; set => SetProperty(ref _level, value); }
 
         public uint Score { get => _score; set => SetProperty(ref _score, value); }
@@ -60,6 +62,8 @@ namespace FateTetris.ViewModels
 
             TetrisGrid = CollectionViewSource.GetDefaultView(_tetris.Engine.Grid);
             LastHighScore = Properties.Settings.Default.HighScore;
+
+            PreviewGrid = CollectionViewSource.GetDefaultView(_tetris.Preview.Engine.Grid);
         }
 
         private void WireCommands()

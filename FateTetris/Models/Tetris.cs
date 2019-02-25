@@ -30,6 +30,8 @@ namespace FateTetris.Models
 
         public ScoreSystem ScoreSystem { get; set; } = new ScoreSystem();
 
+        public TetrisPreview Preview { get; set; } = new TetrisPreview(4);
+
         public Tetrimino CurrentTetrimino { get; set; }
 
         public void Start()
@@ -46,7 +48,9 @@ namespace FateTetris.Models
             ScoreSystem.ClearScore();
             ScoreUpdated?.Invoke(this, null);
 
-            CurrentTetrimino = Engine.GenerateRandomTetrimino();
+            Preview.ClearTetriminos();
+            CurrentTetrimino = NextTetrimino();
+
             Timer.Interval = default(TimeSpan);
             Timer.Start();
         }
@@ -208,7 +212,7 @@ namespace FateTetris.Models
                 }
                 else
                 {
-                    CurrentTetrimino = Engine.GenerateRandomTetrimino();
+                    CurrentTetrimino = NextTetrimino();
                     Timer.Interval = default(TimeSpan);
                 }
             }
@@ -217,6 +221,16 @@ namespace FateTetris.Models
         private bool MoveDown(Tetrimino tetrimino)
         {
             return Engine.Renderer.CommandRender(Engine.MoveDown, tetrimino);
+        }
+
+        private Tetrimino NextTetrimino()
+        {
+            var tetrimino = Preview.GetTetrimino();
+            tetrimino.X = (Engine.X / 2) - 1;
+            tetrimino.Y = -1;
+
+            Preview.DisplayTetriminos();
+            return tetrimino;
         }
     }
 }
