@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
         Title="Settings" Height="380" Width="300"
         SizeToContent="Height"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>

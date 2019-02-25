@@ -8,6 +8,7 @@
         xmlns:viewModels="clr-namespace:FateTetris.ViewModels"
         mc:Ignorable="d"
         Title="Fate Tetris Beta" Height="650" Width="600"
+        WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp">
     <Window.DataContext>
