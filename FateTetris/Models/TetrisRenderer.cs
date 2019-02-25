@@ -91,7 +91,6 @@ namespace FateTetris.Models
                 if (b != null)
                 {
                     b.Rectangle.Fill = null;
-                    b.IsLocked = false;
                 }
             }
         }
