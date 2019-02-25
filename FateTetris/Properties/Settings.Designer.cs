@@ -118,5 +118,17 @@ namespace FateTetris.Properties {
                 this["HighScore"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("63")]
+        public int Hold {
+            get {
+                return ((int)(this["Hold"]));
+            }
+            set {
+                this["Hold"] = value;
+            }
+        }
     }
 }

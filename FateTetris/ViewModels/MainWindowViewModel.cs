@@ -33,6 +33,8 @@ namespace FateTetris.ViewModels
 
         public ICollectionView TetrisGrid { get; set; }
 
+        public ICollectionView HoldGrid { get; set; }
+
         public ICollectionView PreviewGrid { get; set; }
 
         public uint Level { get => _level; set => SetProperty(ref _level, value); }
@@ -58,12 +60,14 @@ namespace FateTetris.ViewModels
             _tetris = new Tetris();
             _tetris.ScoreUpdated += Tetris_ScoreUpdated;
             _tetris.GameOver += Tetris_GameOver;
-            _inputEngine = new InputEngine(_tetris);
 
             TetrisGrid = CollectionViewSource.GetDefaultView(_tetris.Engine.Grid);
-            LastHighScore = Properties.Settings.Default.HighScore;
-
             PreviewGrid = CollectionViewSource.GetDefaultView(_tetris.Preview.Engine.Grid);
+            HoldGrid = CollectionViewSource.GetDefaultView(_tetris.Holder.Engine.Grid);
+
+            _inputEngine = new InputEngine(_tetris);
+
+            LastHighScore = Properties.Settings.Default.HighScore;
         }
 
         private void WireCommands()

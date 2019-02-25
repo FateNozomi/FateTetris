@@ -16,6 +16,7 @@ namespace FateTetris.ViewModels
         private Key _right;
         private Key _rotateLeft;
         private Key _rotateRight;
+        private Key _hold;
         private uint _highScore;
 
         public SettingsViewModel()
@@ -37,6 +38,8 @@ namespace FateTetris.ViewModels
 
         public Key RotateRight { get => _rotateRight; set => SetProperty(ref _rotateRight, value); }
 
+        public Key Hold { get => _hold; set => SetProperty(ref _hold, value); }
+
         public uint HighScore { get => _highScore; set => SetProperty(ref _highScore, value); }
 
         public RelayCommand OkCommand { get; private set; }
@@ -51,6 +54,7 @@ namespace FateTetris.ViewModels
             Right = (Key)Properties.Settings.Default.Right;
             RotateLeft = (Key)Properties.Settings.Default.RotateLeft;
             RotateRight = (Key)Properties.Settings.Default.RotateRight;
+            Hold = (Key)Properties.Settings.Default.Hold;
 
             HighScore = Properties.Settings.Default.HighScore;
         }
@@ -66,6 +70,7 @@ namespace FateTetris.ViewModels
                     Properties.Settings.Default.Right = (int)Right;
                     Properties.Settings.Default.RotateLeft = (int)RotateLeft;
                     Properties.Settings.Default.RotateRight = (int)RotateRight;
+                    Properties.Settings.Default.Hold = (int)Hold;
 
                     Properties.Settings.Default.HighScore = HighScore;
 

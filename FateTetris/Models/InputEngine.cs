@@ -80,6 +80,9 @@ namespace FateTetris.Models
                 case MovementCommand.RotateRight:
                     _tetris.RotateBlockRight();
                     break;
+                case MovementCommand.Hold:
+                    _tetris.Hold();
+                    break;
                 default:
                     break;
             }
@@ -109,6 +112,8 @@ namespace FateTetris.Models
                     break;
                 case MovementCommand.RotateRight:
                     break;
+                case MovementCommand.Hold:
+                    break;
                 default:
                     break;
             }
@@ -133,6 +138,7 @@ namespace FateTetris.Models
             KeyCommands.Add(new KeyCommand(MovementCommand.Right, (Key)Properties.Settings.Default.Right));
             KeyCommands.Add(new KeyCommand(MovementCommand.RotateLeft, (Key)Properties.Settings.Default.RotateLeft));
             KeyCommands.Add(new KeyCommand(MovementCommand.RotateRight, (Key)Properties.Settings.Default.RotateRight));
+            KeyCommands.Add(new KeyCommand(MovementCommand.Hold, (Key)Properties.Settings.Default.Hold));
         }
 
         private void MoveDownTimer_Tick(object sender, EventArgs e)

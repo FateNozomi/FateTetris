@@ -26,6 +26,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="3">
+                <GroupBox Header="Hold" Margin="3">
+                    <r:GridControl TetrisGrid="{Binding HoldGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
+                </GroupBox>
                 <GroupBox Header="LEVEL">
                     <TextBlock Text="{Binding Level}" FontSize="25" HorizontalAlignment="Right"/>
                 </GroupBox>

@@ -30,6 +30,8 @@ namespace FateTetris.Models
 
         public ScoreSystem ScoreSystem { get; set; } = new ScoreSystem();
 
+        public TetrisHolder Holder { get; set; } = new TetrisHolder();
+
         public TetrisPreview Preview { get; set; } = new TetrisPreview(4);
 
         public Tetrimino CurrentTetrimino { get; set; }
@@ -48,8 +50,11 @@ namespace FateTetris.Models
             ScoreSystem.ClearScore();
             ScoreUpdated?.Invoke(this, null);
 
+            Holder.ClearTetrimino();
             Preview.ClearTetriminos();
+
             CurrentTetrimino = NextTetrimino();
+            SetSpawnPosition(CurrentTetrimino);
 
             Timer.Interval = default(TimeSpan);
             Timer.Start();
@@ -113,6 +118,29 @@ namespace FateTetris.Models
         public void RotateBlockRight()
         {
             Engine.Renderer.CommandRender(Engine.RotateRight, CurrentTetrimino);
+        }
+
+        public void Hold()
+        {
+            if (Holder.CanSwap)
+            {
+                Timer.Stop();
+
+                Engine.Renderer.ClearGhostTetrimino(CurrentTetrimino);
+                Engine.Renderer.ClearTetrimino(CurrentTetrimino);
+
+                CurrentTetrimino = Holder.Swap(CurrentTetrimino);
+                Holder.DisplayTetrimino();
+                if (CurrentTetrimino == null)
+                {
+                    CurrentTetrimino = NextTetrimino();
+                }
+
+                SetSpawnPosition(CurrentTetrimino);
+
+                Timer.Interval = default(TimeSpan);
+                Timer.Start();
+            }
         }
 
         public void ClearFullRows()
@@ -213,6 +241,8 @@ namespace FateTetris.Models
                 else
                 {
                     CurrentTetrimino = NextTetrimino();
+                    SetSpawnPosition(CurrentTetrimino);
+                    Holder.ResetSwap();
                     Timer.Interval = default(TimeSpan);
                 }
             }
@@ -226,11 +256,14 @@ namespace FateTetris.Models
         private Tetrimino NextTetrimino()
         {
             var tetrimino = Preview.GetTetrimino();
-            tetrimino.X = (Engine.X / 2) - 1;
-            tetrimino.Y = -1;
-
             Preview.DisplayTetriminos();
             return tetrimino;
+        }
+
+        private void SetSpawnPosition(Tetrimino tetrimino)
+        {
+            tetrimino.X = (Engine.X / 2) - 1;
+            tetrimino.Y = -1;
         }
     }
 }

@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:FateTetris.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
-        Title="Settings" Height="350" Width="300"
+        Title="Settings" Height="380" Width="300"
         SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
@@ -68,6 +68,14 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Rotate Right"/>
                     <m:KeyBindingTextBox Grid.Column="1" Key="{Binding RotateRight}"/>
+                </Grid>
+                <Grid Margin="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Hold"/>
+                    <m:KeyBindingTextBox Grid.Column="1" Key="{Binding Hold}"/>
                 </Grid>
             </StackPanel>
         </GroupBox>

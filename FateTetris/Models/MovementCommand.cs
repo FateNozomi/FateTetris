@@ -9,5 +9,6 @@
         Right,
         RotateLeft,
         RotateRight,
+        Hold,
     }
 }

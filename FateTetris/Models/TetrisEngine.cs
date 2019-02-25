@@ -68,8 +68,6 @@ namespace FateTetris.Models
                     break;
             }
 
-            block.X = (X / 2) - 1;
-            block.Y = -1;
             return block;
         }
 
