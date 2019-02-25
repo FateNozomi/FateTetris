@@ -25,6 +25,14 @@ namespace FateTetris.Views.Controls
         public static readonly DependencyProperty TetrisGridProperty =
             DependencyProperty.Register("TetrisGrid", typeof(ICollectionView), typeof(GridControl), new PropertyMetadata(default(ICollectionView), UpdateTetrisGridCallbacks));
 
+        // Using a DependencyProperty as the backing store for BlockLength.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BlockLengthProperty =
+            DependencyProperty.Register("BlockLength", typeof(double), typeof(GridControl), new PropertyMetadata(default(double)));
+
+        // Using a DependencyProperty as the backing store for ActualBlockLength.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ActualBlockLengthProperty =
+            DependencyProperty.Register("ActualBlockLength", typeof(double), typeof(GridControl), new PropertyMetadata(default(double)));
+
         private List<Tuple<Point, Rectangle>> _rectangles = new List<Tuple<Point, Rectangle>>();
 
         public GridControl()
@@ -38,6 +46,18 @@ namespace FateTetris.Views.Controls
             set { SetValue(TetrisGridProperty, value); }
         }
 
+        public double BlockLength
+        {
+            get { return (double)GetValue(BlockLengthProperty); }
+            set { SetValue(BlockLengthProperty, value); }
+        }
+
+        public double ActualBlockLength
+        {
+            get { return (double)GetValue(ActualBlockLengthProperty); }
+            private set { SetValue(ActualBlockLengthProperty, value); }
+        }
+
         private static void UpdateTetrisGridCallbacks(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is GridControl gridControl)
@@ -48,10 +68,25 @@ namespace FateTetris.Views.Controls
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            GridTetris.Width =
-                GridTetris.ActualHeight /
-                GridTetris.RowDefinitions.Count *
-                GridTetris.ColumnDefinitions.Count;
+            if (BlockLength <= 0)
+            {
+                GridTetris.Width =
+                    GridTetris.ActualHeight /
+                    GridTetris.RowDefinitions.Count *
+                    GridTetris.ColumnDefinitions.Count;
+
+                ActualBlockLength = GridTetris.ActualHeight / GridTetris.RowDefinitions.Count;
+            }
+            else
+            {
+                GridTetris.Width = BlockLength * GridTetris.ColumnDefinitions.Count;
+                GridTetris.Height = BlockLength * GridTetris.RowDefinitions.Count;
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            UserControl_SizeChanged(this, null);
         }
 
         private void DrawTetrisGrid()

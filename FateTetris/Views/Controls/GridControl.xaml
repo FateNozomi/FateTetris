@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FateTetris.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300"
+             Loaded="UserControl_Loaded"
              SizeChanged="UserControl_SizeChanged">
     <Grid x:Name="GridTetris"/>
 </UserControl>
