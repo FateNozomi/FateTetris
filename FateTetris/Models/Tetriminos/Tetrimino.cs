@@ -129,7 +129,7 @@ namespace FateTetris.Models.Tetriminos
             clone.Center = Center;
             clone.PreviousState = PreviousState;
             clone.CurrentState = CurrentState;
-            clone.Color = Color;
+            clone.Color = Color.Clone();
 
             return clone;
         }

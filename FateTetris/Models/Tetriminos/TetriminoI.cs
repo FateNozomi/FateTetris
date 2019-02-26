@@ -10,6 +10,8 @@ namespace FateTetris.Models.Tetriminos
 {
     public class TetriminoI : Tetrimino
     {
+        private static readonly Brush Cyan = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00E5FF"));
+
         public TetriminoI()
         {
             Center = new Point(1.5, 1.5);
@@ -21,7 +23,7 @@ namespace FateTetris.Models.Tetriminos
                 new Point(3, 2),
             };
 
-            Color = Brushes.Cyan;
+            Color = Cyan;
         }
 
         public override Point[] WallKickData()

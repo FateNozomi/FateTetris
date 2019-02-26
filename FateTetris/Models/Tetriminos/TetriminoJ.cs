@@ -10,6 +10,8 @@ namespace FateTetris.Models.Tetriminos
 {
     public class TetriminoJ : Tetrimino
     {
+        private static readonly Brush Blue = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0288D1"));
+
         public TetriminoJ()
             : base()
         {
@@ -22,7 +24,7 @@ namespace FateTetris.Models.Tetriminos
                 new Point(2, 1),
             };
 
-            Color = Brushes.Blue;
+            Color = Blue;
         }
     }
 }
