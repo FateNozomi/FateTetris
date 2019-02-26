@@ -23,11 +23,11 @@ namespace FateTetris.Views.Controls
     {
         // Using a DependencyProperty as the backing store for TetrisGrid.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TetrisGridProperty =
-            DependencyProperty.Register("TetrisGrid", typeof(ICollectionView), typeof(GridControl), new PropertyMetadata(default(ICollectionView), UpdateTetrisGridCallbacks));
+            DependencyProperty.Register("TetrisGrid", typeof(ICollectionView), typeof(GridControl), new PropertyMetadata(default(ICollectionView), UpdateTetrisGridCallback));
 
         // Using a DependencyProperty as the backing store for BlockLength.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BlockLengthProperty =
-            DependencyProperty.Register("BlockLength", typeof(double), typeof(GridControl), new PropertyMetadata(default(double)));
+            DependencyProperty.Register("BlockLength", typeof(double), typeof(GridControl), new PropertyMetadata(default(double), UpdateBlockLengthCallback));
 
         // Using a DependencyProperty as the backing store for ActualBlockLength.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActualBlockLengthProperty =
@@ -58,11 +58,20 @@ namespace FateTetris.Views.Controls
             private set { SetValue(ActualBlockLengthProperty, value); }
         }
 
-        private static void UpdateTetrisGridCallbacks(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void UpdateTetrisGridCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is GridControl gridControl)
             {
                 gridControl.DrawTetrisGrid();
+            }
+        }
+
+        private static void UpdateBlockLengthCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is GridControl gridControl)
+            {
+                gridControl.GridTetris.Width = gridControl.BlockLength * gridControl.GridTetris.ColumnDefinitions.Count;
+                gridControl.GridTetris.Height = gridControl.BlockLength * gridControl.GridTetris.RowDefinitions.Count;
             }
         }
 

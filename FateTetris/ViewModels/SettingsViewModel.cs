@@ -44,6 +44,10 @@ namespace FateTetris.ViewModels
 
         public uint HighScore { get => _highScore; set => SetProperty(ref _highScore, value); }
 
+        public int Rows { get; set; }
+
+        public int Columns { get; set; }
+
         public RelayCommand OkCommand { get; private set; }
 
         public RelayCommand ResetHighScoreCommand { get; private set; }

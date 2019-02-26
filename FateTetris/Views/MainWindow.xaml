@@ -15,51 +15,53 @@
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="3">
-                <GroupBox Header="Hold" Margin="3">
-                    <r:GridControl TetrisGrid="{Binding HoldGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Margin="3">
+                    <GroupBox Header="Hold" Margin="3">
+                        <r:GridControl TetrisGrid="{Binding HoldGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
+                    </GroupBox>
+                    <GroupBox Header="LEVEL">
+                        <TextBlock Text="{Binding Level}" FontSize="25" HorizontalAlignment="Right"/>
+                    </GroupBox>
+                    <GroupBox Header="SCORE">
+                        <TextBlock Text="{Binding Score}" FontSize="25" HorizontalAlignment="Right"/>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <TextBlock Text="LAST HIGH SCORE" Opacity="0.6"/>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding LastHighScore}" Opacity="0.5" FontSize="25" HorizontalAlignment="Right"/>
+                    </GroupBox>
+                    <Button Content="Start" Command="{Binding StartCommand}" Height="23" Margin="3"/>
+                    <Button Content="End" Command="{Binding EndCommand}" Height="23" Margin="3"/>
+                    <Button Content="Settings" Command="{Binding SettingsCommand}" Height="23" Margin="3"/>
+                </StackPanel>
+            </Grid>
+            <r:GridControl x:Name="gridControl" Grid.Column="2" TetrisGrid="{Binding TetrisGrid}" Background="#212121" Margin="3"/>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Preview" Margin="3">
+                    <r:GridControl TetrisGrid="{Binding PreviewGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
                 </GroupBox>
-                <GroupBox Header="LEVEL">
-                    <TextBlock Text="{Binding Level}" FontSize="25" HorizontalAlignment="Right"/>
-                </GroupBox>
-                <GroupBox Header="SCORE">
-                    <TextBlock Text="{Binding Score}" FontSize="25" HorizontalAlignment="Right"/>
-                </GroupBox>
-            </StackPanel>
-            <StackPanel Grid.Row="1">
-                <GroupBox>
-                    <GroupBox.Header>
-                        <TextBlock Text="LAST HIGH SCORE" Opacity="0.6"/>
-                    </GroupBox.Header>
-                    <TextBlock Text="{Binding LastHighScore}" Opacity="0.5" FontSize="25" HorizontalAlignment="Right"/>
-                </GroupBox>
-                <Button Content="Start" Command="{Binding StartCommand}" Height="23" Margin="3"/>
-                <Button Content="End" Command="{Binding EndCommand}" Height="23" Margin="3"/>
-                <Button Content="Settings" Command="{Binding SettingsCommand}" Height="23" Margin="3"/>
-            </StackPanel>
+            </Grid>
         </Grid>
-        <r:GridControl x:Name="gridControl" Grid.Column="2" TetrisGrid="{Binding TetrisGrid}" Background="#212121" Margin="3"/>
-        <Grid Grid.Column="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <GroupBox Header="Preview" Margin="3">
-                <r:GridControl TetrisGrid="{Binding PreviewGrid}" BlockLength="{Binding ElementName=gridControl, Path=ActualBlockLength}" Background="#212121"/>
-            </GroupBox>
-        </Grid>
-    </Grid>
+    </ScrollViewer>
 </Window>

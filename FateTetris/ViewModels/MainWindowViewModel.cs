@@ -19,6 +19,10 @@ namespace FateTetris.ViewModels
         private Tetris _tetris;
         private InputEngine _inputEngine;
 
+        private ICollectionView _tetrisGrid;
+        private ICollectionView _holdGrid;
+        private ICollectionView _previewGrid;
+
         private uint _level;
         private uint _score;
         private uint _lastHighScore;
@@ -28,7 +32,7 @@ namespace FateTetris.ViewModels
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             BuildVersion = version.ToString();
 
-            Init();
+            Init(10, 20);
             WireCommands();
         }
 
@@ -36,11 +40,11 @@ namespace FateTetris.ViewModels
 
         public IWindowService WindowService { get; set; } = new WindowService();
 
-        public ICollectionView TetrisGrid { get; set; }
+        public ICollectionView TetrisGrid { get => _tetrisGrid; set => SetProperty(ref _tetrisGrid, value); }
 
-        public ICollectionView HoldGrid { get; set; }
+        public ICollectionView HoldGrid { get => _holdGrid; set => SetProperty(ref _holdGrid, value); }
 
-        public ICollectionView PreviewGrid { get; set; }
+        public ICollectionView PreviewGrid { get => _previewGrid; set => SetProperty(ref _previewGrid, value); }
 
         public uint Level { get => _level; set => SetProperty(ref _level, value); }
 
@@ -60,9 +64,9 @@ namespace FateTetris.ViewModels
 
         public RelayCommand KeyUpCommand { get; private set; }
 
-        public void Init()
+        public void Init(int x, int y)
         {
-            _tetris = new Tetris();
+            _tetris = new Tetris(x, y);
             _tetris.ScoreUpdated += Tetris_ScoreUpdated;
             _tetris.GameOver += Tetris_GameOver;
 
@@ -95,12 +99,20 @@ namespace FateTetris.ViewModels
                 param =>
                 {
                     var vm = new SettingsViewModel();
+                    vm.Columns = _tetris.Engine.X;
+                    vm.Rows = _tetris.Engine.Y;
                     vm.Init();
                     var result = WindowService.ShowDialog<SettingsView>(vm);
                     if (result == true)
                     {
                         _inputEngine.LoadKeyBindings();
                         LastHighScore = Properties.Settings.Default.HighScore;
+
+                        Init(vm.Columns, vm.Rows);
+                        var windowState = Application.Current.MainWindow.WindowState;
+                        Application.Current.MainWindow.WindowState = WindowState.Maximized;
+                        Application.Current.MainWindow.WindowState = WindowState.Normal;
+                        Application.Current.MainWindow.WindowState = windowState;
                     }
                 },
                 param => !_tetris.IsRunning);

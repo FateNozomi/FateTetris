@@ -11,9 +11,9 @@ namespace FateTetris.Models
 {
     public class Tetris
     {
-        public Tetris()
+        public Tetris(int x, int y)
         {
-            Engine = new TetrisEngine(10, 20);
+            Engine = new TetrisEngine(x, y);
             Timer = new DispatcherTimer();
             Timer.Tick += Timer_Tick;
         }
