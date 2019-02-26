@@ -28,6 +28,8 @@ namespace FateTetris.Models.Tetriminos
 
         public bool IsLocked { get; set; }
 
+        public int LockDelayedCount { get; set; }
+
         public void MoveUp()
         {
             Y -= 1;

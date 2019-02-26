@@ -102,27 +102,55 @@ namespace FateTetris.Models
 
         public void MoveBlockLeft()
         {
-            Engine.Renderer.CommandRender(Engine.MoveLeft, CurrentTetrimino);
+            if (!CurrentTetrimino.IsLocked)
+            {
+                bool moved = Engine.Renderer.CommandRender(Engine.MoveLeft, CurrentTetrimino);
+                if (moved)
+                {
+                    LockDelay();
+                }
+            }
         }
 
         public void MoveBlockRight()
         {
-            Engine.Renderer.CommandRender(Engine.MoveRight, CurrentTetrimino);
+            if (!CurrentTetrimino.IsLocked)
+            {
+                bool moved = Engine.Renderer.CommandRender(Engine.MoveRight, CurrentTetrimino);
+                if (moved)
+                {
+                    LockDelay();
+                }
+            }
         }
 
         public void RotateBlockLeft()
         {
-            Engine.Renderer.CommandRender(Engine.RotateLeft, CurrentTetrimino);
+            if (!CurrentTetrimino.IsLocked)
+            {
+                bool rotated = Engine.Renderer.CommandRender(Engine.RotateLeft, CurrentTetrimino);
+                if (rotated)
+                {
+                    LockDelay();
+                }
+            }
         }
 
         public void RotateBlockRight()
         {
-            Engine.Renderer.CommandRender(Engine.RotateRight, CurrentTetrimino);
+            if (!CurrentTetrimino.IsLocked)
+            {
+                bool rotated = Engine.Renderer.CommandRender(Engine.RotateRight, CurrentTetrimino);
+                if (rotated)
+                {
+                    LockDelay();
+                }
+            }
         }
 
         public void Hold()
         {
-            if (Holder.CanSwap)
+            if (!CurrentTetrimino.IsLocked && Holder.CanSwap)
             {
                 Timer.Stop();
 
@@ -204,9 +232,13 @@ namespace FateTetris.Models
             {
                 if (Timer.IsEnabled)
                 {
-                    Timer.Stop();
-                    Timer.Interval = TimeSpan.FromMilliseconds(500);
-                    Timer.Start();
+                    if (CurrentTetrimino.LockDelayedCount <= 15)
+                    {
+                        Timer.Stop();
+                        CurrentTetrimino.LockDelayedCount++;
+                        Timer.Interval = TimeSpan.FromMilliseconds(500);
+                        Timer.Start();
+                    }
                 }
             }
         }

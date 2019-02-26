@@ -108,28 +108,40 @@ namespace FateTetris.Models
             }
         }
 
-        public void MoveLeft(Tetrimino tetrimino)
+        public bool MoveLeft(Tetrimino tetrimino)
         {
             var clone = tetrimino.Clone();
             clone.MoveLeft();
             if (CanPlace(clone))
             {
                 tetrimino.MoveLeft();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public void MoveRight(Tetrimino tetrimino)
+        public bool MoveRight(Tetrimino tetrimino)
         {
             var clone = tetrimino.Clone();
             clone.MoveRight();
             if (CanPlace(clone))
             {
                 tetrimino.MoveRight();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public void RotateLeft(Tetrimino tetrimino)
+        public bool RotateLeft(Tetrimino tetrimino)
         {
+            bool rotated = false;
+
             var clone = tetrimino.Clone();
             clone.RotateLeft();
             var testSequence = clone.WallKickData();
@@ -143,13 +155,18 @@ namespace FateTetris.Models
                     tetrimino.X += (int)offset.X;
                     tetrimino.Y -= (int)offset.Y;
                     tetrimino.RotateLeft();
+                    rotated = true;
                     break;
                 }
             }
+
+            return rotated;
         }
 
-        public void RotateRight(Tetrimino tetrimino)
+        public bool RotateRight(Tetrimino tetrimino)
         {
+            bool rotated = false;
+
             var clone = tetrimino.Clone();
             clone.RotateRight();
             var testSequence = clone.WallKickData();
@@ -163,9 +180,12 @@ namespace FateTetris.Models
                     tetrimino.X += (int)offset.X;
                     tetrimino.Y -= (int)offset.Y;
                     tetrimino.RotateRight();
+                    rotated = true;
                     break;
                 }
             }
+
+            return rotated;
         }
 
         private bool CanPlace(Tetrimino tetrimino)
