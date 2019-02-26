@@ -26,6 +26,8 @@ namespace FateTetris.ViewModels
 
         public event EventHandler Closing;
 
+        public IMessageBoxService MessageService { get; set; } = new MessageBoxService();
+
         public Key HardDrop { get => _hardDrop; set => SetProperty(ref _hardDrop, value); }
 
         public Key SoftDrop { get => _softDrop; set => SetProperty(ref _softDrop, value); }
@@ -74,8 +76,17 @@ namespace FateTetris.ViewModels
 
                     Properties.Settings.Default.HighScore = HighScore;
 
-                    Properties.Settings.Default.Save();
-                    Closing?.Invoke(this, null);
+                    bool result = MessageService.Show(
+                        "Are you sure you want to Save?",
+                        "Save",
+                        System.Windows.MessageBoxButton.OKCancel,
+                        System.Windows.MessageBoxImage.Question);
+
+                    if (result)
+                    {
+                        Properties.Settings.Default.Save();
+                        Closing?.Invoke(this, null);
+                    }
                 });
 
             ResetHighScoreCommand = new RelayCommand(
