@@ -95,6 +95,7 @@ namespace FateTetris.ViewModels
                     if (result == true)
                     {
                         _inputEngine.LoadKeyBindings();
+                        LastHighScore = Properties.Settings.Default.HighScore;
                     }
                 },
                 param => !_tetris.IsRunning);
