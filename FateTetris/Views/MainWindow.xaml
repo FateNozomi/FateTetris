@@ -7,7 +7,7 @@
         xmlns:r="clr-namespace:FateTetris.Views.Controls"
         xmlns:viewModels="clr-namespace:FateTetris.ViewModels"
         mc:Ignorable="d"
-        Title="Fate Tetris Beta" Height="650" Width="600"
+        Title="Fate Tetris Beta" Height="650" Width="610"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp">
@@ -19,9 +19,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -49,8 +51,8 @@
                 <Button Content="Settings" Command="{Binding SettingsCommand}" Height="23" Margin="3"/>
             </StackPanel>
         </Grid>
-        <r:GridControl x:Name="gridControl" Grid.Column="1" TetrisGrid="{Binding TetrisGrid}" Background="#212121" Margin="3"/>
-        <Grid Grid.Column="2">
+        <r:GridControl x:Name="gridControl" Grid.Column="2" TetrisGrid="{Binding TetrisGrid}" Background="#212121" Margin="3"/>
+        <Grid Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
