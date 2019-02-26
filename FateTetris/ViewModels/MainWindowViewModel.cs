@@ -25,9 +25,14 @@ namespace FateTetris.ViewModels
 
         public MainWindowViewModel()
         {
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            BuildVersion = version.ToString();
+
             Init();
             WireCommands();
         }
+
+        public string BuildVersion { get; set; }
 
         public IWindowService WindowService { get; set; } = new WindowService();
 

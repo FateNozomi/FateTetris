@@ -7,7 +7,7 @@
         xmlns:r="clr-namespace:FateTetris.Views.Controls"
         xmlns:viewModels="clr-namespace:FateTetris.ViewModels"
         mc:Ignorable="d"
-        Title="Fate Tetris Beta" Height="650" Width="610"
+        Title="{Binding BuildVersion, StringFormat='Fate Design Tetris {0}'}" Height="650" Width="610"
         WindowStartupLocation="CenterScreen"
         KeyDown="Window_KeyDown"
         KeyUp="Window_KeyUp">
