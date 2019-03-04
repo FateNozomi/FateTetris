@@ -71,12 +71,7 @@ namespace FateTetris.Models
                 var b = _engine.Grid.FirstOrDefault(r => r.Coordinate == new Point(block.X, block.Y));
                 if (b != null)
                 {
-                    b.Rectangle.Fill = tetrimino.Color;
-                    if (b.Rectangle.Fill.IsFrozen)
-                    {
-                        b.Rectangle.Fill = b.Rectangle.Fill.Clone();
-                    }
-
+                    b.Rectangle.Fill = clone.Color;
                     b.Rectangle.Fill.Opacity = 0.35;
                 }
             }

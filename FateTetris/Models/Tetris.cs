@@ -219,6 +219,8 @@ namespace FateTetris.Models
                 if (b != null)
                 {
                     b.IsLocked = true;
+                    tetrimino.Color.Opacity = 0.85;
+                    b.Rectangle.Fill = tetrimino.Color;
                 }
             }
 
