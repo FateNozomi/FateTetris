@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace FateTetris.Models.Tetriminos
@@ -13,7 +8,6 @@ namespace FateTetris.Models.Tetriminos
         private static readonly Brush Blue = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0288D1"));
 
         public TetriminoJ()
-            : base()
         {
             Center = new Point(1, 1);
             Shape = new Point[]
