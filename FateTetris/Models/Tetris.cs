@@ -88,15 +88,6 @@ namespace FateTetris.Models
                 {
                     LockDelay();
                 }
-                else
-                {
-                    if (Timer.IsEnabled)
-                    {
-                        Timer.Stop();
-                        Timer.Interval = default(TimeSpan);
-                        Timer.Start();
-                    }
-                }
             }
         }
 
