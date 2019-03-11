@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FateTetris.Models.Extensions;
 using FateTetris.Models.Tetriminos;
 
 namespace FateTetris.Models
@@ -36,39 +37,18 @@ namespace FateTetris.Models
 
         public List<Block> Grid { get; } = new List<Block>();
 
-        public Tetrimino GenerateRandomTetrimino()
+        public IEnumerable<Tetrimino> GenerateRandomizedTetriminoBag()
         {
-            Tetrimino block;
-            int rng = _random.Next(7);
-            switch (rng)
-            {
-                case 0:
-                    block = new TetriminoI();
-                    break;
-                case 1:
-                    block = new TetriminoJ();
-                    break;
-                case 2:
-                    block = new TetriminoL();
-                    break;
-                case 3:
-                    block = new TetriminoO();
-                    break;
-                case 4:
-                    block = new TetriminoS();
-                    break;
-                case 5:
-                    block = new TetriminoT();
-                    break;
-                case 6:
-                    block = new TetriminoZ();
-                    break;
-                default:
-                    block = null;
-                    break;
-            }
+            List<Tetrimino> tetriminos = new List<Tetrimino>();
+            tetriminos.Add(new TetriminoI());
+            tetriminos.Add(new TetriminoJ());
+            tetriminos.Add(new TetriminoL());
+            tetriminos.Add(new TetriminoO());
+            tetriminos.Add(new TetriminoS());
+            tetriminos.Add(new TetriminoT());
+            tetriminos.Add(new TetriminoZ());
 
-            return block;
+            return tetriminos.Shuffle(_random).Shuffle(_random);
         }
 
         public void HardDrop(Tetrimino tetrimino)

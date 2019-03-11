@@ -9,7 +9,7 @@ namespace FateTetris.Models
 {
     public class TetrisPreview
     {
-        private Queue<Tetrimino> _tetriminos = new Queue<Tetrimino>();
+        private List<Tetrimino> _tetriminos = new List<Tetrimino>();
 
         public TetrisPreview(int previewCount)
         {
@@ -17,10 +17,7 @@ namespace FateTetris.Models
 
             Engine = new TetrisEngine(4, PreviewCount * 4);
 
-            for (int i = 0; i < PreviewCount; i++)
-            {
-                _tetriminos.Enqueue(Engine.GenerateRandomTetrimino());
-            }
+            _tetriminos.AddRange(Engine.GenerateRandomizedTetriminoBag());
         }
 
         public int PreviewCount { get; }
@@ -32,14 +29,13 @@ namespace FateTetris.Models
             int currentTetriminosCount = _tetriminos.Count;
             if (currentTetriminosCount != PreviewCount)
             {
-                for (int i = 0; i < PreviewCount - currentTetriminosCount; i++)
-                {
-                    _tetriminos.Enqueue(Engine.GenerateRandomTetrimino());
-                }
+                _tetriminos.AddRange(Engine.GenerateRandomizedTetriminoBag());
             }
 
-            _tetriminos.Enqueue(Engine.GenerateRandomTetrimino());
-            return _tetriminos.Dequeue();
+            Tetrimino tetrimino = _tetriminos.First();
+            _tetriminos.Remove(tetrimino);
+
+            return tetrimino;
         }
 
         public void DisplayTetriminos()
@@ -50,13 +46,13 @@ namespace FateTetris.Models
             }
 
             int index = 0;
-            foreach (var tetrimino in _tetriminos)
+            for (int i = 0; i < PreviewCount; i++)
             {
-                tetrimino.X = 1;
-                tetrimino.Y = 2 + (index * 4);
+                _tetriminos[i].X = 1;
+                _tetriminos[i].Y = 2 + (index * 4);
                 index++;
 
-                Engine.Renderer.DrawTetrimino(tetrimino);
+                Engine.Renderer.DrawTetrimino(_tetriminos[i]);
             }
         }
 

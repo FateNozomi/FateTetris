@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Models\KeyBindingTextBox.cs" />
     <Compile Include="Models\TetrisHolder.cs" />
     <Compile Include="Models\TetrisPreview.cs" />
