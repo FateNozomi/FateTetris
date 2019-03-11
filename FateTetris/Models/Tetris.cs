@@ -50,8 +50,9 @@ namespace FateTetris.Models
             ScoreSystem.ClearScore();
             ScoreUpdated?.Invoke(this, null);
 
-            Holder.ClearTetrimino();
             Preview.ClearTetriminos();
+            Holder.ClearTetrimino();
+            Holder.ResetSwap();
 
             CurrentTetrimino = NextTetrimino();
             SetSpawnPosition(CurrentTetrimino);
