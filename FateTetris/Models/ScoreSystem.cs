@@ -34,22 +34,22 @@ namespace FateTetris.Models
                 switch (linesCleared)
                 {
                     case 1:
-                        multiplier = 1;
+                        multiplier = 100;
                         break;
                     case 2:
-                        multiplier = 2.5;
+                        multiplier = 300;
                         break;
                     case 3:
-                        multiplier = 2.5 * 3;
+                        multiplier = 500;
                         break;
                     case 4:
-                        multiplier = 2.5 * 3 * 4;
+                        multiplier = 800;
                         break;
                     default:
                         break;
                 }
 
-                Score += (uint)(40 * multiplier * (Level + 1)) + linesDropped;
+                Score += (uint)(multiplier * (Level + 1)) + linesDropped;
 
                 TotalLines += linesCleared;
                 if (TotalLines >= (Level * 10) + 10)

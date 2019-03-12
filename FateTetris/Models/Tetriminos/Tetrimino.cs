@@ -11,7 +11,9 @@ namespace FateTetris.Models.Tetriminos
 
         public int Y { get; set; }
 
-        public uint LinesDropped { get; set; }
+        public uint LinesSoftDropped { get; set; }
+
+        public uint LinesHardDropped { get; set; }
 
         public Point[] Shape { get; protected set; }
 

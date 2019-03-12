@@ -59,6 +59,8 @@ namespace FateTetris.Models
                 {
                     break;
                 }
+
+                tetrimino.LinesHardDropped += 1;
             }
         }
 
@@ -79,7 +81,7 @@ namespace FateTetris.Models
             if (CanPlace(clone))
             {
                 tetrimino.MoveDown();
-                tetrimino.LinesDropped += 1;
+                tetrimino.LinesSoftDropped += 1;
                 return true;
             }
             else

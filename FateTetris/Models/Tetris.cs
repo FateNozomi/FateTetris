@@ -184,7 +184,7 @@ namespace FateTetris.Models
                 }
             }
 
-            ScoreSystem.IncrementScore(linesCleared, CurrentTetrimino.LinesDropped);
+            ScoreSystem.IncrementScore(linesCleared, CurrentTetrimino.LinesSoftDropped + CurrentTetrimino.LinesHardDropped);
             ScoreUpdated?.Invoke(this, null);
         }
 
