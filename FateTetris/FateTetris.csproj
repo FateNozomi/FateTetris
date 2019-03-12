@@ -59,6 +59,8 @@
     </ApplicationDefinition>
     <Compile Include="Models\Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Models\KeyBindingTextBox.cs" />
+    <Compile Include="Models\Scores\FixedSizedQueue{T}.cs" />
+    <Compile Include="Models\Scores\Action.cs" />
     <Compile Include="Models\TetrisHolder.cs" />
     <Compile Include="Models\TetrisPreview.cs" />
     <Compile Include="Models\TetrisRenderer.cs" />
@@ -94,7 +96,7 @@
     <Compile Include="Models\KeyCommand.cs" />
     <Compile Include="Models\RotationState.cs" />
     <Compile Include="Models\MovementCommand.cs" />
-    <Compile Include="Models\ScoreSystem.cs" />
+    <Compile Include="Models\Scores\ScoreSystem.cs" />
     <Compile Include="Models\Tetriminos\Tetrimino.cs" />
     <Compile Include="Models\Tetriminos\TetriminoI.cs" />
     <Compile Include="Models\Tetriminos\TetriminoJ.cs" />

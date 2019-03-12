@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
-namespace FateTetris.Models
+namespace FateTetris.Models.Scores
 {
     public class ScoreSystem
     {
+        public ScoreSystem()
+        {
+            Actions = new FixedSizedQueue<Action>(5);
+            for (int i = 0; i < Actions.Size; i++)
+            {
+                Actions.Enqueue(null);
+            }
+        }
+
         public uint Level { get; private set; }
 
         public uint TotalLines { get; private set; }
 
         public uint Score { get; private set; }
+
+        public FixedSizedQueue<Action> Actions { get; private set; }
 
         public void SetLevel(uint level)
         {
@@ -27,6 +39,8 @@ namespace FateTetris.Models
 
         public void IncrementScore(uint linesCleared, uint linesDropped)
         {
+            Action action = new Action();
+
             if (linesCleared != 0)
             {
                 double multiplier = 0;
@@ -35,27 +49,35 @@ namespace FateTetris.Models
                 {
                     case 1:
                         multiplier = 100;
+                        action.Type = "Single";
                         break;
                     case 2:
                         multiplier = 300;
+                        action.Type = "Double";
                         break;
                     case 3:
                         multiplier = 500;
+                        action.Type = "Triple";
                         break;
                     case 4:
                         multiplier = 800;
+                        action.Type = "Tetris";
+                        action.Color = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00E5FF"));
                         break;
                     default:
                         break;
                 }
 
-                Score += (uint)(multiplier * (Level + 1)) + linesDropped;
+                action.Points = (uint)(multiplier * (Level + 1)) + linesDropped;
+                Score += action.Points;
 
                 TotalLines += linesCleared;
                 if (TotalLines >= (Level * 10) + 10)
                 {
                     Level++;
                 }
+
+                Actions.Enqueue(action);
             }
         }
 
@@ -63,6 +85,10 @@ namespace FateTetris.Models
         {
             TotalLines = 0;
             Score = 0;
+            for (int i = 0; i < Actions.Size; i++)
+            {
+                Actions.Enqueue(null);
+            }
         }
     }
 }

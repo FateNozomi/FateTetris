@@ -22,6 +22,7 @@ namespace FateTetris.ViewModels
         private ICollectionView _tetrisGrid;
         private ICollectionView _holdGrid;
         private ICollectionView _previewGrid;
+        private ICollectionView _actions;
 
         private uint _level;
         private uint _score;
@@ -45,6 +46,8 @@ namespace FateTetris.ViewModels
         public ICollectionView HoldGrid { get => _holdGrid; set => SetProperty(ref _holdGrid, value); }
 
         public ICollectionView PreviewGrid { get => _previewGrid; set => SetProperty(ref _previewGrid, value); }
+
+        public ICollectionView Actions { get => _actions; set => SetProperty(ref _actions, value); }
 
         public uint Level { get => _level; set => SetProperty(ref _level, value); }
 
@@ -73,6 +76,7 @@ namespace FateTetris.ViewModels
             TetrisGrid = CollectionViewSource.GetDefaultView(_tetris.Engine.Grid);
             PreviewGrid = CollectionViewSource.GetDefaultView(_tetris.Preview.Engine.Grid);
             HoldGrid = CollectionViewSource.GetDefaultView(_tetris.Holder.Engine.Grid);
+            Actions = CollectionViewSource.GetDefaultView(_tetris.ScoreSystem.Actions.Reverse());
 
             _inputEngine = new InputEngine(_tetris);
 
@@ -183,6 +187,7 @@ namespace FateTetris.ViewModels
             {
                 Level = tetris.ScoreSystem.Level;
                 Score = tetris.ScoreSystem.Score;
+                Actions.Refresh();
 
                 if (Score > LastHighScore)
                 {

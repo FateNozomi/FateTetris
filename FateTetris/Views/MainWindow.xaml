@@ -14,6 +14,12 @@
     <Window.DataContext>
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <LinearGradientBrush x:Key="GradientTransparency" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+            <GradientStop Color="#00FFFFFF" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
@@ -37,7 +43,31 @@
                         <TextBlock Text="{Binding Level}" FontSize="25" HorizontalAlignment="Right"/>
                     </GroupBox>
                     <GroupBox Header="SCORE">
-                        <TextBlock Text="{Binding Score}" FontSize="25" HorizontalAlignment="Right"/>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Score}" FontSize="25" HorizontalAlignment="Right"/>
+                            <ItemsControl ItemsSource="{Binding Actions}" VirtualizingStackPanel.IsVirtualizing="True" OpacityMask="{StaticResource GradientTransparency}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Points, StringFormat='+{0}'}" Foreground="{Binding Color}" FontSize="15" TextAlignment="Right" Margin="3"/>
+                                            <Rectangle Grid.Column="1" Width="1" Fill="#212121"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Type}" Foreground="{Binding Color}" FontWeight="SemiBold" FontSize="15" TextAlignment="Left" Margin="3"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </GroupBox>
                 </StackPanel>
                 <StackPanel Grid.Row="1">
