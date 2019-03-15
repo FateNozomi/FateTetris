@@ -48,6 +48,8 @@ namespace FateTetris.ViewModels
 
         public int Columns { get; set; }
 
+        public uint LevelCap { get; set; }
+
         public RelayCommand OkCommand { get; private set; }
 
         public RelayCommand ResetHighScoreCommand { get; private set; }
@@ -61,6 +63,7 @@ namespace FateTetris.ViewModels
             RotateLeft = (Key)Properties.Settings.Default.RotateLeft;
             RotateRight = (Key)Properties.Settings.Default.RotateRight;
             Hold = (Key)Properties.Settings.Default.Hold;
+            LevelCap = Properties.Settings.Default.LevelCap;
 
             HighScore = Properties.Settings.Default.HighScore;
         }
@@ -77,6 +80,7 @@ namespace FateTetris.ViewModels
                     Properties.Settings.Default.RotateLeft = (int)RotateLeft;
                     Properties.Settings.Default.RotateRight = (int)RotateRight;
                     Properties.Settings.Default.Hold = (int)Hold;
+                    Properties.Settings.Default.LevelCap = LevelCap;
 
                     Properties.Settings.Default.HighScore = HighScore;
 

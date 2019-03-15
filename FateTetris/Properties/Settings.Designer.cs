@@ -130,5 +130,17 @@ namespace FateTetris.Properties {
                 this["Hold"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public uint LevelCap {
+            get {
+                return ((uint)(this["LevelCap"]));
+            }
+            set {
+                this["LevelCap"] = value;
+            }
+        }
     }
 }

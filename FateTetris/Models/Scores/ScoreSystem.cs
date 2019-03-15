@@ -18,18 +18,15 @@ namespace FateTetris.Models.Scores
             }
         }
 
-        public uint Level { get; private set; }
+        public uint LevelCap { get; set; }
+
+        public uint Level { get; set; }
 
         public uint TotalLines { get; private set; }
 
         public uint Score { get; private set; }
 
         public FixedSizedQueue<Action> Actions { get; private set; }
-
-        public void SetLevel(uint level)
-        {
-            Level = level;
-        }
 
         public TimeSpan GetGravity()
         {
@@ -74,7 +71,10 @@ namespace FateTetris.Models.Scores
                 TotalLines += linesCleared;
                 if (TotalLines >= (Level * 10) + 10)
                 {
-                    Level++;
+                    if (LevelCap < Level)
+                    {
+                        Level++;
+                    }
                 }
 
                 Actions.Enqueue(action);

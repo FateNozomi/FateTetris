@@ -110,6 +110,7 @@ namespace FateTetris.ViewModels
                     if (result == true)
                     {
                         _inputEngine.LoadKeyBindings();
+                        _tetris.ScoreSystem.LevelCap = Properties.Settings.Default.LevelCap;
                         LastHighScore = Properties.Settings.Default.HighScore;
 
                         Init(vm.Columns, vm.Rows);

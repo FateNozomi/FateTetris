@@ -47,7 +47,8 @@ namespace FateTetris.Models
                 block.IsLocked = false;
             }
 
-            ScoreSystem.SetLevel(0);
+            ScoreSystem.Level = 0;
+            ScoreSystem.LevelCap = Properties.Settings.Default.LevelCap;
             ScoreSystem.ClearScore();
             ScoreUpdated?.Invoke(this, null);
 
